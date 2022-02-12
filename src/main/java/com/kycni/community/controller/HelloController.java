@@ -55,67 +55,64 @@ public class HelloController {
         }
     }
 
-    // @RequestParam响应Get请求，获取Get请求参数，student?current&limit
-    // @RequestParam的作用是获取前端Url传入的参数
-    @ResponseBody
+    // @RequestParam响应Get请求，获取Get请求参数，/student?current&limit
+    // @RequestParam的作用是获取前端Url？后面传入的参数的部分
     @RequestMapping(path = "/students", method = RequestMethod.GET)
-    public String getStudents (
-            @RequestParam(value = "current", required = false, defaultValue = "1") int current,
-            @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
-        System.out.println(current);
-        System.out.println(limit);
-        return "测试前端请求参";
+    @ResponseBody
+    public String students (
+            @RequestParam(name = "current", required = false, defaultValue = "1") int current,
+            @RequestParam(name = "limit", required = false, defaultValue = "1") int limit) {
+        System.out.println("limit: " + limit + "," + "current: " + current);
+        return "@RequestParam响应GET请求";
     }
 
     // @PathVariable响应Get请求，获取Get的请求参数，student/1
-    // @PathVariable作用是获取指定Url路径的用{}包裹的可变部分
-    @ResponseBody
+    // @PathVariable作用是获取跳转Url路径中的可变参数
     @RequestMapping(path = "/student/{id}", method = RequestMethod.GET)
-    public String getStudent(@PathVariable(value = "id") int id) {
-        System.out.println(id);
-        return "我是1号的学生信息";
+    @ResponseBody
+    public String student (@PathVariable(name = "id") Integer id) {
+        return "@PathVariable响应GET请求，id为：" + id;
     }
 
     // 响应POST请求（不用GET原因，显性传参，不安全，URL过长不方便）
     // 获取表单提交数据
+    @RequestMapping(path = "/teacher1", method = RequestMethod.POST)
     @ResponseBody
-    @RequestMapping(path = "/student",method = RequestMethod.POST)
-    public String saveStudent (String name, int age) {
-        System.out.println(name);
-        System.out.println(age);
-        return "返回成功！";
+    public String teacherForm (String name, Integer age) {
+        System.out.println("姓名为：" + name + "，年龄为：" + age);
+        return "POST获取表单信息成功";
     }
     
     // 响应HTML数据 (ModelAndView方式)
-    @RequestMapping(path = "/teacher", method = RequestMethod.GET)
-    public ModelAndView getTeacher () {
+    @RequestMapping("/ModelAndView")
+    public ModelAndView setStudent () {
         ModelAndView mav = new ModelAndView();
         mav.addObject("name", "宋妮");
-        mav.addObject("age", 15);
+        mav.addObject("age", "18");
         mav.setViewName("/demo/view");
         return mav;
     }
     
     // ModelAndView简化版
-    @RequestMapping(path = "/school", method = RequestMethod.GET)
-    public String getSchool (Model model) {
-        model.addAttribute("name","辽宁石油化工大学");
-        model.addAttribute("age",50);
+    @RequestMapping(path = "Model", method = RequestMethod.GET)
+    public String setManager (Model model) {
+        model.addAttribute("name","管理者");
+        model.addAttribute("age",26);
         return "/demo/view";
     }
     
     // 响应Json数据 (异步请求，如注册重复昵称检测)
     // Java对象 -> Json字符串 -> Js对象
     // 单Json数据
-    @RequestMapping(path = "/employ", method = RequestMethod.GET)
+    @RequestMapping(path = "cosmetic", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getEmploy () {
-        Map<String, Object> employ = new HashMap<>();
-        employ.put("姓名", "宋琪");
-        employ.put("年龄", 25);
-        employ.put("薪资", 15000.00);
-        return employ;
-    }
+    public Map<String, Object> getValentine () {
+        Map<String, Object> valentine = new HashMap<>();
+        valentine.put("口红", 10);
+        valentine.put("粉底", "雅诗兰黛");
+        valentine.put("面膜", 20);
+        return valentine;
+    } 
 
     // 响应Json数据 (异步请求，如注册重复昵称检测)
     // 多Json数据
@@ -136,5 +133,4 @@ public class HelloController {
         employs.add(employ);
         return employs;
     }
-    
 } 
