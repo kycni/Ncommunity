@@ -1,6 +1,8 @@
 package com.kycni.community;
 
+import com.kycni.community.dao.DiscussPostMapper;
 import com.kycni.community.dao.UserMapper;
+import com.kycni.community.entity.DiscussPost;
 import com.kycni.community.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Kycni
@@ -22,6 +25,9 @@ public class MapperTests {
     
     @Autowired
     private UserMapper userMapper;
+    
+    @Autowired
+    private DiscussPostMapper discussPostMapper;
     
     @Test
     public void TestSelect () {
@@ -53,5 +59,19 @@ public class MapperTests {
         int rows = userMapper.updateStatus(12, 1);
         rows = userMapper.updateHeaderUrl(12, "http://www.nowcoder.com/102.png");
         rows = userMapper.updatePassword(12, "123456");
+    }
+    
+    @Test
+    public void TestDiscussPosts () {
+        List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(0, 0, 10);
+        for (DiscussPost discussPost : discussPosts) {
+            System.out.println(discussPost);
+        }
+    }
+    
+    @Test
+    public void TestDiscussRows () {
+        int rows = discussPostMapper.selectDiscussRows(0);
+        System.out.println(rows);
     }
 }
