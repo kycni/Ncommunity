@@ -30,6 +30,7 @@
         where username = #{username};
     </select>
     
+    <!--suppress SqlInsertValues -->
     <insert id="insertUser" parameterType="User" keyProperty="id">
         insert into user(<include refid="insertFields"/>)
         values (#{username}, #{password}, #{salt}, #{email}, #{status}, #{type}, #{activationCode}, #{headerUrl}, #{createTime});
