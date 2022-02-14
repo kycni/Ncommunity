@@ -25,7 +25,7 @@ public class MailTests {
     
     @Test
     public void testSendEmail () {
-        mailClient.sendMail("2242602678@qq.com", "宝宝", "发邮件功能搞定！！");
+        mailClient.sendMail("syq278872032@gmail.com", "宝宝", "发邮件功能搞定！！");
     }
     
     @Test
@@ -33,6 +33,6 @@ public class MailTests {
         Context context = new Context();
         context.setVariable("username", "kycni");
         String content = templateEngine.process("/mail/demo", context);
-        mailClient.sendMail("coder417@sina.com", "HTML", "发邮件功能搞定！！");
+        mailClient.sendMail("syq278872032@gmail.com", "HTML", content);
     }
 }
