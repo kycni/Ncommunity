@@ -1,12 +1,14 @@
 package com.kycni.community.controller;
 
 import com.kycni.community.service.AlphaService;
+import com.kycni.community.util.CommunityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -133,4 +135,26 @@ public class HelloController {
         employs.add(employ);
         return employs;
     }
+    
+    // cookie演示案例
+    @RequestMapping(path = "/cookie/set", method = RequestMethod.GET)
+    @ResponseBody
+    public String setCookie (HttpServletRequest request, HttpServletResponse response) {
+        // 创建Cookie
+        Cookie cookie = new Cookie("token", CommunityUtils.generateUUID());
+        // 设置Cookie生效范围
+        cookie.setPath("/community/admin");
+        // 设置Cookie生效时间（十分钟）
+        cookie.setMaxAge(60 * 10);
+        response.addCookie(cookie);
+        return "set cookie";
+    }
+    
+    @RequestMapping(path = "/cookie/get", method = RequestMethod.GET)
+    @ResponseBody
+    public String getCookie (@CookieValue("token") String token) {
+        System.out.println(token);
+        return "get cookie";
+    }
+    
 } 
