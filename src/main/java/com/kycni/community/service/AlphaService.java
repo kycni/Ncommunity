@@ -20,18 +20,14 @@ public class AlphaService {
     }
     
     public AlphaService() {
-        System.out.println("类的实例化");
     }
     
     @PostConstruct
     public void init () {
-        System.out.println("类的初始化");
     }
     
     @PreDestroy
     public void beforeDestroy () {
-        System.out.println("类销毁前");
     }
-    
     
 }

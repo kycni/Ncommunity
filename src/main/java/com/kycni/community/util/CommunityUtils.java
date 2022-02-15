@@ -1,6 +1,5 @@
 package com.kycni.community.util;
 
-import com.sun.mail.smtp.DigestMD5;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.DigestUtils;
 

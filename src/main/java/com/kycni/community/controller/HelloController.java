@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -153,8 +154,26 @@ public class HelloController {
     @RequestMapping(path = "/cookie/get", method = RequestMethod.GET)
     @ResponseBody
     public String getCookie (@CookieValue("token") String token) {
+        // cookie只能存少量的字符串数据，因为要来回传，太多太复杂影响性能，因为需要前端可以识别，所以只能传字符串
         System.out.println(token);
         return "get cookie";
     }
     
-} 
+    @RequestMapping(path = "/session/set", method = RequestMethod.GET)
+    @ResponseBody
+    public String setSession (HttpSession session) {
+        // session可以存更多数据，任何类型
+        session.setAttribute("id", 521);
+        session.setAttribute("name", "Test");
+        return "set session";
+    }
+
+    @RequestMapping(path = "/session/get", method = RequestMethod.GET)
+    @ResponseBody
+    public String getSession (HttpSession session) {
+        // session可以存更多数据，任何类型
+        System.out.println(session.getAttribute("id"));
+        System.out.println(session.getAttribute("name"));
+        return "get session";
+    }
+}  

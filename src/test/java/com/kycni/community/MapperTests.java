@@ -1,8 +1,10 @@
 package com.kycni.community;
 
 import com.kycni.community.dao.DiscussPostMapper;
+import com.kycni.community.dao.LoginTicketMapper;
 import com.kycni.community.dao.UserMapper;
 import com.kycni.community.entity.DiscussPost;
+import com.kycni.community.entity.LoginTicket;
 import com.kycni.community.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +30,9 @@ public class MapperTests {
     
     @Autowired
     private DiscussPostMapper discussPostMapper;
+    
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
     
     @Test
     public void TestSelect () {
@@ -73,5 +78,26 @@ public class MapperTests {
     public void TestDiscussRows () {
         int rows = discussPostMapper.selectDiscussRows(0);
         System.out.println(rows);
+    }
+    
+    @Test
+    public void TestInsertLoginTicket () {
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setStatus(0);
+        loginTicket.setUserId(123);
+        loginTicket.setTicket("abc");
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + 1000 * 60 * 10));
+        loginTicketMapper.insertLoginTicket(loginTicket);        
+    }
+    
+    @Test
+    public void TestSelectTicket () {
+        LoginTicket ticket = loginTicketMapper.selectByTicket("abc");
+        System.out.println(ticket);
+    }
+    
+    @Test
+    public void TestUpdateStatus () {
+        loginTicketMapper.updateStatus("abc", 1);
     }
 }

@@ -2,7 +2,6 @@ package com.kycni.community.dao;
 
 import com.kycni.community.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 /**
  * @author Kycni
@@ -13,7 +12,7 @@ public interface UserMapper {
     
     User selectById (int id); 
     
-    User selectByName (String userName);
+    User selectByName (String username);
     
     User selectByEmail (String email);
     
