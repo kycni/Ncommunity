@@ -6,6 +6,7 @@ import com.kycni.community.entity.LoginTicket;
 import com.kycni.community.entity.User;
 import com.kycni.community.util.CommunityConstant;
 import com.kycni.community.util.CommunityUtils;
+import com.kycni.community.util.HostHolder;
 import com.kycni.community.util.MailClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Kycni
@@ -161,4 +159,24 @@ public class UserService implements CommunityConstant {
     public void logout (String ticket) {
         loginTicketMapper.updateStatus(ticket, 1);
     }
+    
+    // 查询登录凭证
+    public LoginTicket findLoginTicket (String ticket) {
+        return loginTicketMapper.selectByTicket(ticket);
+    }
+
+    // 修改密码
+    public void updatePassword (int id, String newPassword) {
+        User user = userMapper.selectById(id);
+        newPassword = CommunityUtils.md5(newPassword + user.getSalt());
+        if (user.getPassword() == newPassword) {
+            userMapper.updatePassword(id, newPassword);
+        }
+    }
+    
+    // 修改头像路径
+    public int updateHeader (int userId, String headerUrl) {
+        return userMapper.updateHeaderUrl(userId, headerUrl);
+    }
+    
 }

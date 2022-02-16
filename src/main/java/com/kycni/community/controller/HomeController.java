@@ -32,8 +32,6 @@ public class HomeController {
     public String getDiscussPosts (Model model, Page page) {
         // SpringMVC中参数Model和Page由DispatcherServlet实例化，自动将Page装入Model
         page.setRows(discussPostService.findDiscussRows(0));
-        System.out.println(page.getRows());
-        
         page.setPath("/index");
         
         List<DiscussPost> posts = 
